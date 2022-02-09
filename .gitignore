@@ -78,9 +78,10 @@ fabric.properties
 
 django_venv/
 
-pragmatic1/.env
+.env
 
-../db.sqlite3
+db.sqlite3
 
 __pycache__/
 
+media/
