@@ -1,0 +1,26 @@
+<header>
+    <div class="header-container">
+        <div class="header-title">
+            <h1>Pragmatic</h1>
+        </div>
+
+        <div>
+            <span>nav1</span>
+            <span>nav2</span>
+            <span>nav3</span>
+            {% if not user.is_authenticated %}
+            <a href="{% url 'accountapp:create' %}?next={{ request.path }} ">
+                 <span>Sign Up</span>
+            </a>
+
+            <a href="{% url 'accountapp:login' %}?next={{ request.path }} ">
+                 <span>Login</span>
+            </a>
+            {% else %}
+            <a href="{% url 'accountapp:detail' pk=user.pk %}"><span>MyPage</span></a>
+             <a href="{% url 'accountapp:logout' %}?next={{ request.path }}"><span>Logout</span></a>
+
+            {% endif %}
+        </div>
+    </div>
+</header>
