@@ -7,7 +7,7 @@
         {% if target_user.profile %}
         <img src="{{ target_user.profile.image.url }}" style="height:20tem; width:20rem; border-radius:10rem; margin-top:1rem" >
 
-      <h2 style="font-family: 'NanumSquareEB'">
+      <h2 style="font-family: 'NanumSquareEB'; margin:1rem 0;">
         {{ target_user.profile.nickname }}
           {% if target_user == user %}
         <a href="{% url 'profileapp:update' pk=target_user.profile.pk %}"> Edit </a>
@@ -16,13 +16,15 @@
 
          <h4>{{target_user.profile.message}}</h4>
         {% else %}
-        {% if target_user == user %}
-        <h2>
-            <a href="{% url 'profileapp:create' %}">
-            Create Profile
-        </a>
-        </h2>
-        {% endif %}
+            {% if target_user == user %}
+                <h1 style="font-family: 'NanumSquareEB';" > Plz Add Profile! </h1>
+                <h2>
+                    <a href="{% url 'profileapp:create' %}">
+                    Create Profile
+                    </a>
+                </h2>
+            {% endif %}
+         <h2 style="font-family: 'NanumSquareEB';"> No Profile</h2>
         {% endif %}
 
 
