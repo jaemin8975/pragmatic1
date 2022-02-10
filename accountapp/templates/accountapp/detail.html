@@ -5,7 +5,8 @@
     <div style="text-align:center; max-width:500px; margin:4rem auto;">
 
         {% if target_user.profile %}
-        <img src="{{ target_user.profile.image.url }}" style="height:20tem; width:20rem; border-radius:10rem; margin-top:1rem" >
+        <img src="{{ target_user.profile.image.url }}" style="height:20tem; width:20rem; border-radius:10rem; margin-top:1rem
+        object-fit: cover;" >
 
       <h2 style="font-family: 'NanumSquareEB'; margin:1rem 0;">
         {{ target_user.profile.nickname }}
