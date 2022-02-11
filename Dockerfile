@@ -8,7 +8,7 @@ WORKDIR /home/pragmatic1
 
 RUN pip install -r requirements.txt
 
-RUN echo "django-insecure-$mpnv(f3_tu=!f84*#8_6!kbkrn!f-_#+@87%ew%peeu!695fr" > .env
+RUN echo "SECRET_KEY=django-insecure-$mpnv(f3_tu=!f84*#8_6!kbkrn!f-_#+@87%ew%peeu!695fr" > .env
 
 RUN python manage.py migrate
 
