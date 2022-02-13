@@ -12,6 +12,8 @@ RUN echo "SECRET_KEY=django-insecure-$mpnv(f3_tu=!f84*#8_6!kbkrn!f-_#+@87%ew%pee
 
 RUN python manage.py migrate
 
+RUN python manage.py collectstatic
+
 EXPOSE 80
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]
