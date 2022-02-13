@@ -1,19 +1,31 @@
 FROM python:3.9.0
 
+RUN mkdir /root/.ssh/
+
+ADD ./.ssh/id_rsa /root/.ssh/id_rsa
+
+RUN chmod 600 /root/.ssh/id_rsa
+
+RUN touch /root/.ssh/known_hosts
+
+RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
+
 WORKDIR /home/
 
-RUN git clone https://github.com/jaemin8975/pragmatic1.git
+RUN echo "t2"
+
+#RUN git clone https://github.com/jaemin8975/pragmatic1.git
+RUN git clone git@github.com:jaemin8975/pragmatic1.git
 
 WORKDIR /home/pragmatic1
 
 RUN pip install -r requirements.txt
 
-RUN echo "SECRET_KEY=django-insecure-$mpnv(f3_tu=!f84*#8_6!kbkrn!f-_#+@87%ew%peeu!695fr" > .env
+RUN pip install gunicorn
 
-RUN python manage.py migrate
-
-RUN python manage.py collectstatic
+RUN pip install mysqlclient
 
 EXPOSE 80
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]
+CMD ["bash", "-c", "python manage.py collectstatic --noinput --settings=pragmatic1.settings.deploy && python manage.py migrate --settings=pragmatic1.settings.deploy && gunicorn pragmatic1.wsgi --env DJANGO_SETTINGS_MODULE=pragmatic1.settings.deploy --bind 0.0.0.0:8080"]
+~

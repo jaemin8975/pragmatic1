@@ -1,0 +1,63 @@
+version: "3"
+
+services:
+    nginxproxy:
+        depends_on:
+            - maria_db
+            - django
+        image: nginx:alpine
+        container_name: nginxproxy
+        networks:
+            - django_test_default
+        ports:
+            - "80:80"
+        restart: always
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+            - static:/data/static
+            - media:/data/media
+    django:
+        image: django_imgae:5
+        restart: always
+        container_name: mydjango
+        networks:
+            - django_test_default
+        volumes:
+            - static:/home/pragmatic1/staticfiles/
+            - media:/home/pragmatic1/media/
+        secrets:
+            - MYSQL_PASSWORD
+            - DJANGO_CECRET_KEY
+
+    maria_db:
+        image: mariadb:10.6
+        restart: always
+        container_name: maria_db
+        networks:
+           - django_test_default
+        secrets:
+           - MYSQL_ROOT_PASSWORD
+           - MYSQL_PASSWORD
+        environment:
+            MYSQL_ROOT_PASSWORD_FILE: /run/secrets/MYSQL_ROOT_PASSWORD
+            MYSQL_DATABASE: django
+            MYSQL_USER: song
+            MYSQL_PASSWORD_FILE: /run/secrets/MYSQL_PASSWORD
+        volumes:
+            - database:/var/lib/mysql
+
+volumes:
+    static:
+    media:
+    database:
+
+networks:
+        django_test_default:
+
+secrets:
+    DJANGO_SECRET_KEY:
+        external: true
+    MYSQL_ROOT_PASSWORD:
+        external: true
+    MYSQL_PASSWORD:
+        external: true
