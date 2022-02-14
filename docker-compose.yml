@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 
 services:
     nginxproxy:
@@ -17,7 +17,9 @@ services:
             - static:/data/static
             - media:/data/media
     django:
-        image: django_imgae:5
+        depends_on:
+            - maria_db
+        image: django_image:8
         restart: always
         container_name: mydjango
         networks:
@@ -27,7 +29,7 @@ services:
             - media:/home/pragmatic1/media/
         secrets:
             - MYSQL_PASSWORD
-            - DJANGO_CECRET_KEY
+            - DJANGO_SECRET_KEY
 
     maria_db:
         image: mariadb:10.6
